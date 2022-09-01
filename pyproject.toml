@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "yaml-format"
+version = "0.1.0"
+description = "Simple YAML formatter."
+authors = ["Michon van Dooren <me@maienm.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "yaml_format"}]
+
+[tool.poetry.dependencies]
+python = ">=3.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
