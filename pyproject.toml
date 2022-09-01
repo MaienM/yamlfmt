@@ -8,7 +8,12 @@ readme = "README.md"
 packages = [{include = "yaml_format"}]
 
 [tool.poetry.dependencies]
-python = ">=3.5"
+python = ">=3.6"
+ruyaml = "^0.91.0"
+yamllint = "^1.27.1"
+
+[tool.poetry.scripts]
+yaml-format = 'yaml_format:main'
 
 [build-system]
 requires = ["poetry-core"]
