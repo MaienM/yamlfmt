@@ -27,17 +27,10 @@ def find_files(paths: Iterable[str], config: YamlLintConfig) -> Iterable[str]:
 			yield fn
 
 
-def format_source(yaml: YAML, source: str) -> str:
-	""" Format the given YAML sourcecode. """
-	with StringIO() as f:
-		yaml.dump_all(yaml.load_all(source), f)
-		return f.getvalue().strip() + '\n'
-
-
-def format_stream(yaml: YAML, file_in: TextIOBase, file_out: TextIOBase):
-	source = file_in.read()
-	formatted = format_source(yaml, source)
-	file_out.write(formatted)
+def format(yaml: YAML, stream_in: TextIOBase, stream_out: TextIOBase):
+	""" Read YAML from the input stream and write the formatted version to the output stream. """
+	documents = yaml.load_all(stream_in)
+	yaml.dump_all(documents, stream_out)
 
 
 def get_parser() -> ArgumentParser:
@@ -49,13 +42,7 @@ def get_parser() -> ArgumentParser:
 
 
 def main():
-	"""
-	The main entrypoint.
-
-	If only a single argument is passed ('-'), format stdin and output to stdout.
-	If arguments are passed in these are used as paths to scan and format.
-	If no arguments are provided scan for all files and format them.
-	"""
+	""" The main entrypoint. """
 	parser = get_parser()
 	args = parser.parse_args()
 
@@ -71,11 +58,14 @@ def main():
 
 	for path in paths:
 		if path == '-':
-			format_stream(yaml, stdin, stdout)
+			format(yaml, stdin, stdout)
 		else:
 			if args.write:
-				with open(path, 'rw') as f:
-					format_stream(yaml, f, f)
+				with StringIO() as stream_out:
+					with open(path, 'r') as stream_in:
+						format(yaml, stream_in, stream_out)
+					with open(path, 'w') as f:
+						f.write(stream_out.getvalue())
 			else:
-				with open(path, 'r') as f:
-					format_stream(yaml, f, stdout)
+				with open(path, 'r') as stream_in:
+					format(yaml, stream_in, stdout)
