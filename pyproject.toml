@@ -5,7 +5,7 @@ description = "Simple YAML formatter."
 authors = ["Michon van Dooren <me@maienm.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "yaml_format"}]
+packages = [{include = "yamlfmt"}]
 
 [tool.poetry.dependencies]
 python = ">=3.8"
@@ -20,7 +20,7 @@ autoflake = "^1.4.0"
 mypy = "^1.0.0"
 
 [tool.poetry.scripts]
-yaml-format = 'yaml_format:main'
+yamlfmt = 'yamlfmt:main'
 
 [build-system]
 requires = ["poetry-core"]

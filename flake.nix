@@ -19,8 +19,8 @@
     in
     {
       packages = rec {
-        yaml_format = p2n.mkPoetryApplication common;
-        default = yaml_format;
+        yamlfmt = p2n.mkPoetryApplication common;
+        default = yamlfmt;
       };
 
       devShells.default = (p2n.mkPoetryEnv common).env.overrideAttrs (prev: {

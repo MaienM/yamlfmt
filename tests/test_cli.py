@@ -7,7 +7,7 @@ from typing import Protocol
 
 from pytest import MonkeyPatch, fixture
 
-from yaml_format.cli import main
+from yamlfmt.cli import main
 
 
 class CLIFixture(Protocol):
@@ -53,8 +53,8 @@ class PipeFixture:
 @fixture
 def pipe(monkeypatch: MonkeyPatch) -> Iterable[PipeFixture]:
 	with StringIO() as stdin, StringIO() as stdout:
-		monkeypatch.setattr("yaml_format.cli.stdin", stdin)
-		monkeypatch.setattr("yaml_format.cli.stdout", stdout)
+		monkeypatch.setattr("yamlfmt.cli.stdin", stdin)
+		monkeypatch.setattr("yamlfmt.cli.stdout", stdout)
 
 		yield PipeFixture(stdin, stdout)
 
