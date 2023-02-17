@@ -15,6 +15,7 @@
       p2n = poetry2nix.legacyPackages.${system};
       common = {
         projectDir = self;
+        preferWheels = true;
       };
     in
     {
